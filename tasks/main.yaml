@@ -1,13 +1,84 @@
 ---
-# file: tasks/main.yaml
+# file: roles/docker/tasks/main.yaml
 
-- include_tasks: "{{ ansible_distribution|lower }}.yaml"
+- include_tasks: "{{ ansible_distribution|lower }}_{{ ansible_distribution_release }}.yaml"
   tags:
-    - FIXME-inst-dependencies
+    - docker-inst-dependencies
 
-- name: Install FIXME.
+- name: Inst - Docker
   package:
-    name: "{{ FIXME_package }}"
-    state: "{{ FIXME_package_state }}"
+    name:
+      - "{{ docker_package }}"
+      - "{{ docker_package }}-cli"
+    state: "{{ docker_package_state }}"
   tags:
-    - FIXME-inst
+    - docker-inst-package
+
+- name: Conf - Docker Service
+  service:
+    name: docker
+    state: "{{ docker_service_state }}"
+    enabled: "{{ docker_service_enabled }}"
+  tags:
+    - docker-conf-service
+
+- name: Conf - Docker Service Directory
+  file:
+    path: "/etc/systemd/system/docker.service.d"
+    state: "directory"
+  tags:
+    - docker-conf-service
+
+- name: Conf - Docker Daemon
+  template:
+    src: "templates/daemon.json.j2"
+    dest: "/etc/docker/daemon.json"
+    owner: "root"
+    group: "root"
+    mode: "0644"
+  notify:
+    - "Restart Docker"
+  when: >
+    docker_daemon is defined
+  tags:
+    - docker-conf-daemon
+
+- name: Conf - Docker HTTP Proxy
+  template:
+    src: "templates/docker.service.proxy.http"
+    dest: "/etc/systemd/system/docker.service.d/http-proxy.conf"
+    owner: "root"
+    group: "root"
+    mode: "0644"
+  notify:
+    - "Restart Docker"
+  when: >
+    proxy_env is defined and
+    proxy_env.http_proxy is defined
+  tags:
+    - docker-conf-service
+
+- name: Conf - Docker HTTPS Proxy
+  template:
+    src: "templates/docker.service.proxy.https"
+    dest: "/etc/systemd/system/docker.service.d/https-proxy.conf"
+    owner: "root"
+    group: "root"
+    mode: "0644"
+  notify:
+    - "Restart Docker"
+  when: >
+    proxy_env is defined and
+    proxy_env.https_proxy is defined
+  tags:
+    - docker-conf-service
+
+- name: Conf - Users to Docker Group
+  user:
+    name: "{{ ansible_user }}"
+    groups: "docker"
+    append: true
+  tags:
+    - docker-conf-user
+
+- meta: flush_handlers

@@ -1,4 +1,4 @@
-# Ansible Role: Default template
+# Ansible Role: Docker
 
 ## Requirements
 
@@ -21,7 +21,7 @@ None
 
     - hosts: localhost
       roles:
-        - pmikus.FIXME
+        - pmikus.docker
 
 ## License
 

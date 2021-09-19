@@ -4,9 +4,9 @@
 dependencies: []
 
 galaxy_info:
-  role_name: FIXME
+  role_name: docker
   author: pmikus
-  description: FIXME for Linux.
+  description: Docker-CE for Linux.
   company: none
   license: "license (BSD, MIT)"
   min_ansible_version: 2.9
@@ -17,4 +17,4 @@ galaxy_info:
         - groovy
         - hirsute
   galaxy_tags:
-    - FIXME
+    - docker
