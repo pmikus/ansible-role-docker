@@ -1,5 +1,5 @@
 ---
-# file: roles/docker/tasks/ubuntu_groovy.yaml
+# file: roles/docker/tasks/groovy.yaml
 
 - name: Inst - Dependencies
   apt:
