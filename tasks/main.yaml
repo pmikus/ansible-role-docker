@@ -19,6 +19,8 @@
     name: docker
     state: "{{ docker_service_state }}"
     enabled: "{{ docker_service_enabled }}"
+  when:
+    - docker_service_mgr == "systemd"
   tags:
     - docker-conf-service
 
@@ -26,6 +28,8 @@
   file:
     path: "/etc/systemd/system/docker.service.d"
     state: "directory"
+  when:
+    - docker_service_mgr == "systemd"
   tags:
     - docker-conf-service
 
@@ -39,7 +43,8 @@
   notify:
     - "Restart Docker"
   when: >
-    docker_daemon is defined
+    docker_daemon is defined and
+    docker_service_mgr == "systemd"
   tags:
     - docker-conf-daemon
 
@@ -54,7 +59,8 @@
     - "Restart Docker"
   when: >
     proxy_env is defined and
-    proxy_env.http_proxy is defined
+    proxy_env.http_proxy is defined and
+    docker_service_mgr == "systemd"
   tags:
     - docker-conf-service
 
@@ -69,7 +75,8 @@
     - "Restart Docker"
   when: >
     proxy_env is defined and
-    proxy_env.https_proxy is defined
+    proxy_env.https_proxy is defined and
+    docker_service_mgr == "systemd"
   tags:
     - docker-conf-service
 
