@@ -1,7 +1,7 @@
 ---
 # file: roles/docker/tasks/main.yaml
 
-- include_tasks: "{{ ansible_distribution|lower }}_{{ ansible_distribution_release }}.yaml"
+- include_tasks: "{{ ansible_distribution_release }}.yaml"
   tags:
     - docker-inst-dependencies
 
