@@ -28,6 +28,7 @@
   file:
     path: "/etc/systemd/system/docker.service.d"
     state: "directory"
+    mode: "0755"
   when:
     - docker_service_mgr == "systemd"
   tags:
@@ -80,4 +81,5 @@
   tags:
     - docker-conf-service
 
-- meta: flush_handlers
+- name: Meta - Flush handlers
+  meta: flush_handlers
