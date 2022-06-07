@@ -6,7 +6,7 @@
     - docker-inst-dependencies
 
 - name: Inst - Docker
-  package:
+  ansible.builtin.package:
     name:
       - "{{ docker_package }}"
       - "{{ docker_package }}-cli"
@@ -15,7 +15,7 @@
     - docker-inst-package
 
 - name: Conf - Docker Service
-  service:
+  ansible.builtin.service:
     name: docker
     state: "{{ docker_service_state }}"
     enabled: "{{ docker_service_enabled }}"
@@ -25,7 +25,7 @@
     - docker-conf-service
 
 - name: Conf - Docker Service Directory
-  file:
+  ansible.builtin.file:
     path: "/etc/systemd/system/docker.service.d"
     state: "directory"
     mode: "0755"
@@ -35,7 +35,7 @@
     - docker-conf-service
 
 - name: Conf - Docker Daemon
-  template:
+  ansible.builtin.template:
     src: "templates/daemon.json.j2"
     dest: "/etc/docker/daemon.json"
     owner: "root"
