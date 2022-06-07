@@ -63,8 +63,9 @@ jobs:
         run: pip3 install ansible ansible-lint
 
       - name: Lint code.
-        run: |
-          ansible-lint
+        uses: ansible-community/ansible-lint-action@v6.2.1
+        with:
+          path: 'pmikus.docker'
 
   sonarcloud:
     name: SonarCloud
