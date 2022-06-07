@@ -16,5 +16,7 @@ galaxy_info:
         - focal
         - groovy
         - hirsute
+        - impish
+        - jammy
   galaxy_tags:
     - docker
