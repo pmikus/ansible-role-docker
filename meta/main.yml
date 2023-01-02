@@ -15,5 +15,6 @@ galaxy_info:
       versions:
         - focal
         - jammy
+        - kinetic
   galaxy_tags:
     - docker
