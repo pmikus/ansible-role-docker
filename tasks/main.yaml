@@ -8,7 +8,6 @@
     - files:
       - "{{ ansible_os_family }}.yaml"
       - "default.yaml"
-      skip: True
   tags:
     - docker-inst-dependencies
 
