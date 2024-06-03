@@ -47,7 +47,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Ansible Galaxy Role Importer
-        uses: hspaans/ansible-galaxy-action@v1
+      - name: Ansible Galaxy Release
+        uses: ansible-actions/ansible-galaxy-action@v1.2.0
         with:
           api_key: ${{ secrets.GALAXY_TOKEN }}
