@@ -50,4 +50,4 @@ jobs:
       - name: Ansible Galaxy Release
         uses: ansible-actions/ansible-galaxy-action@v1.2.0
         with:
-          api_key: ${{ secrets.GALAXY_TOKEN }}
+          galaxy_api_key: ${{ secrets.GALAXY_TOKEN }}
